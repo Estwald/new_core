@@ -4,7 +4,7 @@ new_core v1.0
 New Core to launch sm.self
 
 Based partially in the work of MiralaTijera, this utility replace sys_init_osd.self and launch vsh.self directly (or original sys_init_osd.self as sys_init_osd_orig.self).
-i
+
 It have two working ways:
 
 - With "boot_on" or "install" flags it mount /dev_usb000 device, operates and launch vsh.self (or sys_init_osd_orig.sys). This is the secure mode, but it causes the ps3 pad desynchronization (same case of MiralaTijera Core)
@@ -33,6 +33,6 @@ ignoresm : ignore the load of sm.self (test flag)
 
 NOTES:
 
-- Some flags are disabled prefixing the character underline . The same thing when you install sm.self or new_core.self.
+- Some flags are disabled prefixing the character underline. The same thing when you install sm.self or new_core.self.
 
 - Some functions reboot the system from the XMB: don´t worry XD
