@@ -31,6 +31,16 @@
 
 #define LV2_SM_CMD_ADDR 0x8000000000000450ULL
 
+#define REBUG 1
+
+#ifdef REBUG
+static u64 lv1poke(u64 addr, u64 value) 
+{ 
+    lv2syscall2(9, (u64) addr, (u64) value); 
+    return_to_user_prog(u64);
+}
+#endif
+
 
 u64 lv2peek(u64 addr) 
 { 
@@ -124,9 +134,28 @@ void patchs_lv2(){
         
         syscall_base = 0x800000000035BCA8ULL;
 
+        #ifdef REBUG
+        // Remove LV2 memory protection using LV1_POKE (syscall 9). Maybe unnecessary
+ 
+        lv1poke(0x370A28, 0x0000000000000001ULL);
+        lv1poke(0x370A30, 0xe0d251b556c59f05ULL);
+        lv1poke(0x370A38, 0xc232fcad552c80d7ULL);
+        lv1poke(0x370A40, 0x65140cd200000000ULL);
+        #endif
+
     } else if(cfw == 0x430C) {
         
         syscall_base = 0x800000000035DBE0ULL;
+
+        #ifdef REBUG
+        // Remove LV2 memory protection using LV1_POKE (syscall 9). Maybe unnecessary
+ 
+        lv1poke(0x370AA8 + 0, 0x0000000000000001ULL);
+        lv1poke(0x370AA8 + 8, 0xe0d251b556c59f05ULL);
+        lv1poke(0x370AA8 + 16, 0xc232fcad552c80d7ULL);
+        lv1poke(0x370AA8 + 24, 0x65140cd200000000ULL);
+
+        #endif
 
     } else if(cfw == 0x431C) {
         
@@ -139,6 +168,15 @@ void patchs_lv2(){
     } else if(cfw == 0x446C) {
     
         syscall_base = 0x800000000035E860ULL;
+
+        #ifdef REBUG
+        // Remove LV2 memory protection using LV1_POKE (syscall 9). Maybe unnecessary
+ 
+        lv1poke(0x370AA8, 0x0000000000000001ULL);
+        lv1poke(0x370AA8 + 8, 0xE0D251B556C59F05ULL);
+        lv1poke(0x370AA8 + 16, 0xC232FCAD552C80D7ULL);
+        lv1poke(0x370AA8 + 24, 0x65140CD200000000ULL);
+        #endif
     
     } else if(cfw == 0x450C) {
     
