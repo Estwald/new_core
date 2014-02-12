@@ -120,7 +120,8 @@ void patchs_lv2(){
     if(uval == 0x80000000003487D0ULL) cfw = 0x440C; else
     if(uval == 0x8000000000348DF0ULL) cfw = 0x446C; else
     if(uval == 0x800000000034B160ULL) cfw = 0x450C; else
-    if(uval == 0x800000000034B2E0ULL) cfw = 0x453C;
+    if(uval == 0x800000000034B2E0ULL) cfw = 0x453C; else
+    if(uval == 0x800000000034E620ULL) cfw = 0x455C;
 
     if(cfw == 0x341C) {
         
@@ -185,6 +186,10 @@ void patchs_lv2(){
     } else if(cfw == 0x453C) {
     
         syscall_base = 0x800000000035F300ULL;
+    
+    } else if(cfw == 0x455C) {
+    
+        syscall_base = 0x8000000000362680ULL;
     
     } else exit(0);
 
@@ -346,6 +351,20 @@ void patchs_lv2(){
 
         // enables sys_set_leds
         lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386
+
+    } else if(cfw == 0x455C) { // firmware 4.55
+
+        // enables sys_game_get_temperature
+        lv2poke32(0x800000000000C6A8ULL, 0x38600000); // sys 383
+
+        // enables sys_sm_get_fan_policy
+        lv2poke32(0x8000000000009E38ULL, 0x38600001); // sys 409
+
+        // enables sys_sm_set_fan_policy
+        lv2poke32(0x800000000000A334ULL, 0x38600001); // sys 389
+
+        // enables sys_set_leds
+        lv2poke32(0x800000000000A3FCULL, 0x38600001); // sys 386
 
     }
 
