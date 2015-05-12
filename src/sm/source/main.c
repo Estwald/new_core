@@ -114,14 +114,26 @@ void patchs_lv2(){
 
     if(uval == 0x800000000033E720ULL) cfw = 0x341C; else
     if(uval == 0x8000000000330540ULL) cfw = 0x355C; else
+	if(uval == 0x800000000034AC80ULL) cfw = 0x355D; else
     if(uval == 0x8000000000346390ULL) cfw = 0x421C; else
+	if(uval == 0x8000000000363E80ULL) cfw = 0x421D; else
     if(uval == 0x8000000000348200ULL) cfw = 0x430C; else
     if(uval == 0x8000000000348210ULL) cfw = 0x431C; else
     if(uval == 0x80000000003487D0ULL) cfw = 0x440C; else
+	if(uval == 0x80000000003487E0ULL) cfw = 0x441C; else
+	if(uval == 0x80000000003665C0ULL) cfw = 0x441D; else
     if(uval == 0x8000000000348DF0ULL) cfw = 0x446C; else
+	if(uval == 0x8000000000366BD0ULL) cfw = 0x446D; else
     if(uval == 0x800000000034B160ULL) cfw = 0x450C; else
+	if(uval == 0x800000000036EC40ULL) cfw = 0x450D; else
     if(uval == 0x800000000034B2E0ULL) cfw = 0x453C; else
-    if(uval == 0x800000000034E620ULL) cfw = 0x455C;
+	if(uval == 0x8000000000370620ULL) cfw = 0x453D; else
+    if(uval == 0x800000000034E620ULL) cfw = 0x455C; else
+	if(uval == 0x80000000003738E0ULL) cfw = 0x455D; else
+	if(uval == 0x800000000034F950ULL) cfw = 0x460C; else
+	if(uval == 0x800000000034F960ULL) cfw = 0x465C || 0x466C; else
+	if(uval == 0x8000000000375510ULL) cfw = 0x465D; else
+	if(uval == 0x800000000034FB10ULL) cfw = 0x470C;
 
     if(cfw == 0x341C) {
         
@@ -130,6 +142,10 @@ void patchs_lv2(){
     } else if(cfw == 0x355C) {
         
         syscall_base = 0x8000000000346570ULL;
+
+    } else if(cfw == 0x355D) {
+        
+        syscall_base = 0x8000000000361578ULL;
 
     } else if(cfw == 0x421C) {
         
@@ -143,6 +159,20 @@ void patchs_lv2(){
         lv1poke(0x370A38, 0xc232fcad552c80d7ULL);
         lv1poke(0x370A40, 0x65140cd200000000ULL);
         #endif
+
+    } else if(cfw == 0x421D) {
+	
+	    #ifdef REBUG
+        // Remove LV2 memory protection using LV1_POKE (syscall 9). Maybe unnecessary
+ 
+        lv1poke(0x370AA8 + 0, 0x0000000000000001ULL);
+        lv1poke(0x370AA8 + 8, 0xe0d251b556c59f05ULL);
+        lv1poke(0x370AA8 + 16, 0xc232fcad552c80d7ULL);
+        lv1poke(0x370AA8 + 24, 0x65140cd200000000ULL);
+
+        #endif
+        
+        syscall_base = 0x800000000037A1B0ULL;
 
     } else if(cfw == 0x430C) {
         
@@ -158,6 +188,20 @@ void patchs_lv2(){
 
         #endif
 
+    } else if(cfw == 0x430D) {
+    
+	    #ifdef REBUG
+        // Remove LV2 memory protection using LV1_POKE (syscall 9). Maybe unnecessary
+ 
+        lv1poke(0x370AA8 + 0, 0x0000000000000001ULL);
+        lv1poke(0x370AA8 + 8, 0xe0d251b556c59f05ULL);
+        lv1poke(0x370AA8 + 16, 0xc232fcad552c80d7ULL);
+        lv1poke(0x370AA8 + 24, 0x65140cd200000000ULL);
+
+        #endif
+	
+        syscall_base = 0x800000000037C068ULL;
+	
     } else if(cfw == 0x431C) {
         
         syscall_base = 0x800000000035DBE0ULL;
@@ -166,6 +210,20 @@ void patchs_lv2(){
     
         syscall_base = 0x800000000035E260ULL;
     
+    } else if(cfw == 0x441D) {
+	
+	    #ifdef REBUG
+        // Remove LV2 memory protection using LV1_POKE (syscall 9). Maybe unnecessary
+ 
+        lv1poke(0x370AA8 + 0, 0x0000000000000001ULL);
+        lv1poke(0x370AA8 + 8, 0xe0d251b556c59f05ULL);
+        lv1poke(0x370AA8 + 16, 0xc232fcad552c80d7ULL);
+        lv1poke(0x370AA8 + 24, 0x65140cd200000000ULL);
+
+        #endif
+    
+        syscall_base = 0x800000000037C9E8ULL;
+	
     } else if(cfw == 0x446C) {
     
         syscall_base = 0x800000000035E860ULL;
@@ -179,17 +237,89 @@ void patchs_lv2(){
         lv1poke(0x370AA8 + 24, 0x65140CD200000000ULL);
         #endif
     
-    } else if(cfw == 0x450C) {
+    } else if(cfw == 0x446D) {
+	
+	    #ifdef REBUG
+        // Remove LV2 memory protection using LV1_POKE (syscall 9). Maybe unnecessary
+ 
+        lv1poke(0x370AA8 + 0, 0x0000000000000001ULL);
+        lv1poke(0x370AA8 + 8, 0xe0d251b556c59f05ULL);
+        lv1poke(0x370AA8 + 16, 0xc232fcad552c80d7ULL);
+        lv1poke(0x370AA8 + 24, 0x65140cd200000000ULL);
+
+        #endif
+    
+        syscall_base = 0x800000000037CFE8ULL;
+		
+	} else if(cfw == 0x450C) {
     
         syscall_base = 0x800000000035F0D0ULL;
     
-    } else if(cfw == 0x453C) {
+    } else if(cfw == 0x450D) {
+    
+        syscall_base = 0x8000000000383658ULL;
+	
+	} else if(cfw == 0x453C) {
     
         syscall_base = 0x800000000035F300ULL;
     
+    } else if(cfw == 0x453D) {
+	
+	    #ifdef REBUG
+        // Remove LV2 memory protection using LV1_POKE (syscall 9). Maybe unnecessary
+ 
+        lv1poke(0x370AA8 + 0, 0x0000000000000001ULL);
+        lv1poke(0x370AA8 + 8, 0xe0d251b556c59f05ULL);
+        lv1poke(0x370AA8 + 16, 0xc232fcad552c80d7ULL);
+        lv1poke(0x370AA8 + 24, 0x65140cd200000000ULL);
+
+        #endif
+    
+        syscall_base = 0x8000000000385108ULL;
+
     } else if(cfw == 0x455C) {
     
         syscall_base = 0x8000000000362680ULL;
+    
+    } else if(cfw == 0x455D) {
+    
+        syscall_base = 0x8000000000388488ULL;
+		
+	} else if(cfw == 0x460C) {
+    
+        syscall_base = 0x8000000000363A18ULL;
+    
+    } else if(cfw == 0x465C || 0x466C) {
+	
+	    #ifdef REBUG
+        // Remove LV2 memory protection using LV1_POKE (syscall 9). Maybe unnecessary
+ 
+        lv1poke(0x370AA8 + 0, 0x0000000000000001ULL);
+        lv1poke(0x370AA8 + 8, 0xe0d251b556c59f05ULL);
+        lv1poke(0x370AA8 + 16, 0xc232fcad552c80d7ULL);
+        lv1poke(0x370AA8 + 24, 0x65140cd200000000ULL);
+
+        #endif
+    
+        syscall_base = 0x8000000000363A18ULL;
+    
+    } else if(cfw == 0x465D) {
+	
+	    #ifdef REBUG
+        // Remove LV2 memory protection using LV1_POKE (syscall 9). Maybe unnecessary
+ 
+        lv1poke(0x370AA8 + 0, 0x0000000000000001ULL);
+        lv1poke(0x370AA8 + 8, 0xe0d251b556c59f05ULL);
+        lv1poke(0x370AA8 + 16, 0xc232fcad552c80d7ULL);
+        lv1poke(0x370AA8 + 24, 0x65140cd200000000ULL);
+
+        #endif
+    
+        syscall_base = 0x800000000038A120ULL;
+    
+    }  else if(cfw == 0x470C) {
+    
+        syscall_base = 0x8000000000363B60ULL;
     
     } else exit(0);
 
@@ -240,6 +370,20 @@ void patchs_lv2(){
             // enables sys_set_leds
             lv2poke32(0x8000000000009280ULL, 0x38600001); // sys 386 *
             
+        } else if(cfw == 0x355D) { // cfw 3.55 dex
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000B598ULL, 0x38600000); // sys 383 
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000008D3CULL, 0x38600001); // sys 409 
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x8000000000009238ULL, 0x38600001); // sys 389 
+            
+            // enables sys_set_leds
+            lv2poke32(0x8000000000009300ULL, 0x38600001); // sys 386 
+
+            
         } else if(cfw == 0x421C) { // CFW 4.21
 
             // enables sys_game_get_temperature
@@ -254,119 +398,271 @@ void patchs_lv2(){
             // enables sys_set_leds
             lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386 *
      
-        } else if(cfw == 0x430C) { // CFW 4.30
-
+        } else if(cfw == 0x421D) { // cfw 4.21 dex
             // enables sys_game_get_temperature
-            lv2poke32(0x800000000000C694ULL, 0x38600000); // sys 383 *
-
-            // enables sys_sm_get_fan_policy
-            lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409 *
-
-            // enables sys_sm_set_fan_policy
-            lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389 *
-
-            // enables sys_set_leds
-            lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386 *
-
-        } else if(cfw == 0x431C) { // CFW 4.31
-
-            // enables sys_game_get_temperature
-            lv2poke32(0x800000000000C698ULL, 0x38600000); // sys 383
-
-            // enables sys_sm_get_fan_policy
-            lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409
-
-            // enables sys_sm_set_fan_policy
-            lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389
-
-            // enables sys_set_leds
-            lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386
-
-        } else if(cfw == 0x440C) { // CFW 4.40
-
-            // enables sys_game_get_temperature
-            lv2poke32(0x800000000000C694ULL, 0x38600000); // sys 383
-
-            // enables sys_sm_get_fan_policy
-            lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409
-
-            // enables sys_sm_set_fan_policy
-            lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389
-
-            // enables sys_set_leds
-            lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386
+            lv2poke32(0x800000000000C718ULL, 0x38600000); // sys 383 
             
-        } else if(cfw == 0x441C) { // firmware 4.41
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009EA8ULL, 0x38600001); // sys 409 
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A3A4ULL, 0x38600001); // sys 389 
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A46CULL, 0x38600001); // sys 386 
 
+            
+        } else if(cfw == 0x430C) { // cfw 4.30
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C694ULL, 0x38600000); // sys 383 
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409 
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389 
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386 
+
+            
+        } else if(cfw == 0x430D) { // cfw 4.30 dex
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C714ULL, 0x38600000); // sys 383 
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009EA8ULL, 0x38600001); // sys 409 
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A3A4ULL, 0x38600001); // sys 389 
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A46CULL, 0x38600001); // sys 386 
+
+            
+        } else if(cfw == 0x431C) { // cfw 4.31
             // enables sys_game_get_temperature
             lv2poke32(0x800000000000C698ULL, 0x38600000); // sys 383
-
+            
             // enables sys_sm_get_fan_policy
             lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409
-
+            
             // enables sys_sm_set_fan_policy
             lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389
-
-            // enables sys_set_leds
-            lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386
-        
-    } else if(cfw == 0x446C) { // firmware 4.46
-
-            // enables sys_game_get_temperature
-            lv2poke32(0x800000000000C698ULL, 0x38600000); // sys 383
-
-            // enables sys_sm_get_fan_policy
-            lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409
-
-            // enables sys_sm_set_fan_policy
-            lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389
-
+            
             // enables sys_set_leds
             lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386
 
-    } else if(cfw == 0x450C) { // firmware 4.50
-
+            
+        } else if(cfw == 0x440C) { // cfw 4.40
             // enables sys_game_get_temperature
             lv2poke32(0x800000000000C694ULL, 0x38600000); // sys 383
-
+            
             // enables sys_sm_get_fan_policy
             lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409
-
+            
             // enables sys_sm_set_fan_policy
             lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389
-
+            
             // enables sys_set_leds
             lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386
-    
-    } else if(cfw == 0x453C) { // firmware 4.53
 
-        // enables sys_game_get_temperature
-        lv2poke32(0x800000000000C698ULL, 0x38600000); // sys 383
+            
+        } else if(cfw == 0x441C) { // cfw 4.41
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C698ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386
 
-        // enables sys_sm_get_fan_policy
-        lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409
+            
+        } else if(cfw == 0x441D) { // cfw 4.41 DEX
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C718ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009EA8ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A3A4ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A46CULL, 0x38600001); // sys 386
 
-        // enables sys_sm_set_fan_policy
-        lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389
+            
+        } else if(cfw == 0x446C) { // cfw 4.46
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C698ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386
 
-        // enables sys_set_leds
-        lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386
+            
+        } else if(cfw == 0x446D) { // cfw 4.46 DEX
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C718ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009EA8ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A3A4ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A46CULL, 0x38600001); // sys 386
 
-    } else if(cfw == 0x455C) { // firmware 4.55
+            
+        } else if(cfw == 0x450C) { // cfw 4.50
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C694ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386
 
-        // enables sys_game_get_temperature
-        lv2poke32(0x800000000000C6A8ULL, 0x38600000); // sys 383
+            
+        } else if(cfw == 0x450D) { // cfw 4.50 DEX
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C714ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009EA8ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A3A4ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A46CULL, 0x38600001); // sys 386
 
-        // enables sys_sm_get_fan_policy
-        lv2poke32(0x8000000000009E38ULL, 0x38600001); // sys 409
+            
+        } else if(cfw == 0x453C) { // cfw 4.53
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C698ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009E28ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A324ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A3ECULL, 0x38600001); // sys 386
 
-        // enables sys_sm_set_fan_policy
-        lv2poke32(0x800000000000A334ULL, 0x38600001); // sys 389
+            
+        } else if(cfw == 0x453D) { // cfw 4.53dex
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C718ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009EA8ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A3A4ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A46CULL, 0x38600001); // sys 386
 
-        // enables sys_set_leds
-        lv2poke32(0x800000000000A3FCULL, 0x38600001); // sys 386
+            
+        }  else if(cfw == 0x455C) { // cfw 4.55
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C6A8ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009E38ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A334ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A3FCULL, 0x38600001); // sys 386
 
-    }
+            
+        }  else if(cfw == 0x455D) { // cfw 4.55 dex
+
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C728ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009EB8ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A3B4ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A47CULL, 0x38600001); // sys 386
+
+            
+        }  else if(cfw == 0x460C) { // cfw 4.60
+
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C6A4ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009E38ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A334ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A3FCULL, 0x38600001); // sys 386
+
+            
+        } else if(cfw == 0x465C || 0x466C) { // cfw 4.65
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C6A8ULL, 0x38600000); // sys 383
+            
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009E38ULL, 0x38600001); // sys 409
+            
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A334ULL, 0x38600001); // sys 389
+            
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A3FCULL, 0x38600001); // sys 386
+
+            
+        } else if(cfw == 0x465D) { // cfw 4.65 DEX
+     
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C728ULL, 0x38600000); // sys 383
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009EB8ULL, 0x38600001); // sys 409
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A3B4ULL, 0x38600001); // sys 389
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A47CULL, 0x38600001); // sys 386
+     
+            
+        } else if(cfw == 0x470C) {  // cfw 4.70 
+
+            // enables sys_game_get_temperature
+            lv2poke32(0x800000000000C590ULL, 0x38600000); // sys 383
+            // enables sys_sm_get_fan_policy
+            lv2poke32(0x8000000000009DF0ULL, 0x38600001); // sys 409
+            // enables sys_sm_set_fan_policy
+            lv2poke32(0x800000000000A30CULL, 0x38600001); // sys 389
+            // enables sys_set_leds
+            lv2poke32(0x800000000000A390ULL, 0x38600001); // sys 386
+
+            
+        }
 
         sysUsleep(10000);
     }
@@ -405,6 +701,71 @@ u32 temp_control[6] = {
 int speed_up = 0;
 u64 payload_ctrl;
 int stopped = 0;
+
+int curr_fan = 0;
+int target_fan = 0;
+int incre_fan = 0;
+
+static int build_fan_target(int target)
+{
+    int v= target - curr_fan;
+    int s;
+
+    if(curr_fan == 0) {
+        curr_fan = target_fan = target;
+        incre_fan = 0;
+        if(sys_sm_set_fan_policy(0, 2, curr_fan)==0) return 0;
+    } else {
+
+        target_fan = target;
+
+        s = v / 5;  // 5 steps test
+
+        if(s == 0) {
+            
+            s = v / 4; // 4 steps test
+
+            if(s == 0) {
+
+                s = v / 3; // 3 steps test
+
+                if(s == 0) {
+
+                    s = v / 2; // 2 steps test
+
+                    if(s == 0) s = v;
+
+                }
+            }
+        }
+
+        incre_fan = s;
+
+        curr_fan += incre_fan;
+        
+        if(incre_fan < 0) {
+            if(curr_fan <= target_fan) {
+                curr_fan = target_fan;
+                incre_fan = 0;
+            }
+        } else {
+
+            // max speed required!
+            if(target_fan == speed_table[7] || curr_fan >= target_fan) {
+                curr_fan = target_fan;
+                incre_fan = 0;
+            }
+
+        }
+
+        if(sys_sm_set_fan_policy(0, 2, curr_fan)==0) return 0;
+       
+    }
+
+    
+    
+    return -1;
+}
 
 static void fan_manager()
 {
@@ -445,6 +806,27 @@ static void fan_manager()
     
     }
 
+    // adjust speed step to step (400 ms)
+    if(temp_enable && step2 != 1 && incre_fan && curr_fan) {
+        
+        curr_fan += incre_fan;
+        
+        if(incre_fan < 0) {
+            if(curr_fan <= target_fan) {
+                curr_fan = target_fan;
+                incre_fan = 0;
+            }
+        } else {
+            if(curr_fan >= target_fan) {
+                curr_fan = target_fan;
+                incre_fan = 0;
+            }
+
+        } 
+
+        sys_sm_set_fan_policy(0, 2, curr_fan);
+    }
+
     if(temp_enable && step2 == 1) {
         temp_enable^=128;
         stopped = 0;
@@ -477,7 +859,7 @@ static void fan_manager()
         } else speed_up = 0;
 
         if(speed !=cspeed && temp_enable) {
-            if(sys_sm_set_fan_policy(0, 2, speed)==0) {
+            if(build_fan_target(speed)==0) {
                 cspeed = speed;
                 if((temp_enable & 127)!=2 && lv2peek32(PAYLOAD_BASE) == 0x50534D45) {
                     payload_ctrl = (PAYLOAD_BASE + (lv2peek32(PAYLOAD_BASE + 4ULL ))) - 8ULL;
@@ -523,6 +905,8 @@ static void fan_manager()
         
         if(!set_main_flag) {
             sys_sm_set_fan_policy(0, 1, 0x5f);
+            curr_fan = target_fan = 0x5f;
+            incre_fan = 0;
             set_main_flag = 1;
             stopped = 1;
         } else stopped = 1;
