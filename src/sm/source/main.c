@@ -1,5 +1,8 @@
 /* 
-    (c) 2013 Estwald <www.elotrolado.net>
+    (c) 2013-2015 Estwald <www.elotrolado.net> (original project)
+    (c) 2014-2015 Orion90 <www.elotrolado.net> (lv2 patches)
+
+    NOTE: Add here your name/nick name if you modify this code (if you want)
 
     "System Manager" is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -210,6 +213,20 @@ void patchs_lv2(){
     
         syscall_base = 0x800000000035E260ULL;
     
+    } else if(cfw == 0x441C) {
+	
+	    #ifdef REBUG
+        // Remove LV2 memory protection using LV1_POKE (syscall 9). Maybe unnecessary
+ 
+        lv1poke(0x370AA8 + 0, 0x0000000000000001ULL);
+        lv1poke(0x370AA8 + 8, 0xe0d251b556c59f05ULL);
+        lv1poke(0x370AA8 + 16, 0xc232fcad552c80d7ULL);
+        lv1poke(0x370AA8 + 24, 0x65140cd200000000ULL);
+
+        #endif
+    
+        syscall_base = 0x800000000035E260ULL;
+		
     } else if(cfw == 0x441D) {
 	
 	    #ifdef REBUG
